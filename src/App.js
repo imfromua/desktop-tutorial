@@ -1,23 +1,39 @@
+import React, {useEffect} from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+
+import firebase from "firebase/app";
+import "firebase/auth";
+
+import {
+  FirebaseAuthProvider,
+  FirebaseAuthConsumer
+} from "@react-firebase/auth";
+
+import {firebaseConfig} from './constants/firebaseConfig'
+
 function App() {
+
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Huy sosi guboi tr9si <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <div>
+      <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
+      <FirebaseAuthConsumer>
+            {({ isSignedIn }) => {
+              if (isSignedIn === true) {
+                return "Signed in";
+              } else {
+                return "Not signed in";
+              }
+            }}
+      </FirebaseAuthConsumer>
+      </FirebaseAuthProvider>
+      </div>
       </header>
+     
     </div>
   );
 }

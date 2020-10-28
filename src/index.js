@@ -4,6 +4,13 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import firebase from 'firebase/app';
+import {firebaseConfig} from './constants/firebaseConfig'
+import 'firebase/auth';
+import 'firebase/firestore';
+
+firebase.initializeApp(firebaseConfig);
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
