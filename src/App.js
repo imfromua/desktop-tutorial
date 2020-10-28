@@ -13,12 +13,15 @@ import {
 
 import {firebaseConfig} from './constants/firebaseConfig'
 
+import Navigation from './navigation'
+
 function App() {
 
 
   return (
     <div className="App">
       <header className="App-header">
+        <Navigation />
       <div>
       <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
       <FirebaseAuthConsumer>
