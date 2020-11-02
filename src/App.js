@@ -10,6 +10,8 @@ import {
   FirebaseAuthConsumer,
 } from "@react-firebase/auth";
 
+import { FirebaseDatabaseProvider } from "@react-firebase/database";
+
 import { firebaseConfig } from "./constants/firebaseConfig";
 
 import {
@@ -51,38 +53,40 @@ function PrivateRoute({ children, isAuth, ...rest }) {
 function App() {
   return (
     <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
-      <Router>
-        <div className="App">
-          <Navigation />
-          <header className="App-header">
-            <div>
-              <FirebaseAuthConsumer>
-                {({ isSignedIn }) => {
-                  return (
-                    <Switch>
-                      <Route path="/signin">
-                        <SignIn />
-                      </Route>
-                      <Route path="/signup">
-                        <SignUp />
-                      </Route>
-                      <Router path="/openpage">
-                        <OpenPage />
-                      </Router>
-                      <PrivateRoute isAuth={isSignedIn} path="/closepage">
-                        <ClosePage />
-                      </PrivateRoute>
-                      <PrivateRoute isAuth={isSignedIn} path="/logout">
-                        <LogOut />
-                      </PrivateRoute>
-                    </Switch>
-                  );
-                }}
-              </FirebaseAuthConsumer>
-            </div>
-          </header>
-        </div>
-      </Router>
+      <FirebaseDatabaseProvider firebase={firebase} {...firebaseConfig}>
+        <Router>
+          <div className="App">
+            <Navigation />
+            <header className="App-header">
+              <div>
+                <FirebaseAuthConsumer>
+                  {({ isSignedIn }) => {
+                    return (
+                      <Switch>
+                        <Route path="/signin">
+                          <SignIn />
+                        </Route>
+                        <Route path="/signup">
+                          <SignUp />
+                        </Route>
+                        <Router path="/openpage">
+                          <OpenPage />
+                        </Router>
+                        <PrivateRoute isAuth={isSignedIn} path="/closepage">
+                          <ClosePage />
+                        </PrivateRoute>
+                        <PrivateRoute isAuth={isSignedIn} path="/logout">
+                          <LogOut />
+                        </PrivateRoute>
+                      </Switch>
+                    );
+                  }}
+                </FirebaseAuthConsumer>
+              </div>
+            </header>
+          </div>
+        </Router>
+      </FirebaseDatabaseProvider>
     </FirebaseAuthProvider>
   );
 }
